@@ -25,6 +25,7 @@ public class MethodRenamer
 
             Console.WriteLine($"Renaming {renamableMethod.Name} to {blueprintMethod.MethodName}");
             renamableMethod.Name = blueprintMethod.MethodName;
+            _methodsRenamed++;
 
             if (renamableMethod.DeclaringType.Name == blueprintMethod.DeclaringType)
                 continue;
@@ -75,4 +76,7 @@ public class MethodRenamer
             .Where(x => x.blueprintMethod.MethodName != x.targetMethod.MethodName)
             .ToList();
     }
+    private int _methodsRenamed = 0;
+    public int MethodsRenamed => _methodsRenamed;
+
 }
