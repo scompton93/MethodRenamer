@@ -2,8 +2,6 @@
 
 MethodRenamer is a .NET library for renaming methods in .NET assemblies, specifically .net assemblies that have been obfuscated.
 
-The MethodRenamer library is a useful tool for anonymizing or standardizing the names of methods in a .NET assembly, based on a blueprint assembly. By using the MethodAnonymizer class, the library provides a simple and easy-to-use way to rename methods in a .NET assembly.
-
 ## Usage
 
 To use MethodRenamer, create an instance of the `MethodRenamer` class and pass in the paths to the target assembly, blueprint assembly, and the output path for the renamed assembly. The blueprint assembly provides the names for the methods in the target assembly.
