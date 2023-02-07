@@ -3,9 +3,9 @@ using System.Text;
 
 namespace NamingsResolver;
 
-public class AnonymizedMethod
+public class MethodAnonymizer
 {
-    public AnonymizedMethod(MethodDefinition md)
+    public MethodAnonymizer(MethodDefinition md)
     {
         foreach (var parameter in md.Parameters)
         {
