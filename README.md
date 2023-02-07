@@ -1,8 +1,6 @@
 # MethodRenamer
 
-MethodRenamer is a .NET library for renaming methods in .NET assemblies,  specifically .net assemblies that have been obfuscated. 
-
-It uses Mono.Cecil to manipulate .NET assemblies at the IL level, allowing you to rename methods in any .NET language.
+MethodRenamer is a .NET library for renaming methods in .NET assemblies, specifically .net assemblies that have been obfuscated. 
 
 ## Usage
 
