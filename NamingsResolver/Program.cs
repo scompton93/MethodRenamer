@@ -10,35 +10,23 @@ internal class Program
     {
         const string targetPath = @"C:\Users\x\Downloads\gamepack-deob.dll";
         const string blueprintPath = @"C:\Users\x\Downloads\gamepack-deob - Copy.dll";
+
         string outputPath = targetPath.Replace(".dll", "-renamed.dll");
 
-        var targetMethods = GetMethods(targetPath)
-            .GroupBy(o => o.AnonymousDefinition)
-            .Where(g => g.Count() == 1)
-            .SelectMany(g => g);
-        var blueprintMethods = GetMethods(blueprintPath)
-            .GroupBy(o => o.AnonymousDefinition)
-            .Where(g => g.Count() == 1)
-            .SelectMany(g => g);
+        var targetMethods = GetUniqueMethodDefinitions(targetPath);
+        var blueprintMethods = GetUniqueMethodDefinitions(blueprintPath);
 
-        var matchedMethods = targetMethods
-            .Join(
-                blueprintMethods,
-                tagetMethod => tagetMethod.AnonymousDefinition,
-                blueprintMethod => blueprintMethod.AnonymousDefinition,
-                (tagetMethod, blueprintMethod) => new { tagetMethod, blueprintMethod }
-            )
-            .Where(x => x.blueprintMethod.MethodName != x.tagetMethod.MethodName);
+        var matchedMethods = GetMatchedMethods(targetMethods, blueprintMethods);
 
         var module = ModuleDefinition.ReadModule(targetPath);
-        var methodsToRename = from type in module.Types from method in type.Methods select method;
+        var methodsToRename = module.Types.SelectMany(type => type.Methods);
 
         foreach (var renamableMethod in methodsToRename)
         {
             var blueprintMethod = matchedMethods
-                .Where(x => x.tagetMethod.MethodName == renamableMethod.Name)
-                .Select(x => x.blueprintMethod)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.TargetMethod.MethodName == renamableMethod.Name)
+                .BlueprintMethod;
+
             if (blueprintMethod == null)
                 continue;
 
@@ -53,21 +41,46 @@ internal class Program
             );
             renamableMethod.DeclaringType.Name = blueprintMethod.DeclaringType;
         }
-        module.Write("test.dll");
+
+        module.Write(outputPath);
         Console.WriteLine("Done.");
         Console.ReadKey();
     }
 
-    public static List<MethodAnonymizer> GetMethods(string target)
+    private static List<MethodAnonymizer> GetUniqueMethodDefinitions(string path)
     {
-        var module = ModuleDefinition.ReadModule(target);
-        var methods = from type in module.Types from method in type.Methods select method;
+        var module = ModuleDefinition.ReadModule(path);
+        var methods = module.Types.SelectMany(type => type.Methods);
 
         var anonymizedMethods = new List<MethodAnonymizer>();
         foreach (var method in methods)
         {
             anonymizedMethods.Add(new MethodAnonymizer(method));
         }
-        return anonymizedMethods;
+
+        return anonymizedMethods
+            .GroupBy(o => o.AnonymousDefinition)
+            .Where(g => g.Count() == 1)
+            .SelectMany(g => g)
+            .ToList();
+    }
+
+    private static List<(
+        MethodAnonymizer TargetMethod,
+        MethodAnonymizer BlueprintMethod
+    )> GetMatchedMethods(
+        List<MethodAnonymizer> targetMethods,
+        List<MethodAnonymizer> blueprintMethods
+    )
+    {
+        return targetMethods
+            .Join(
+                blueprintMethods,
+                targetMethod => targetMethod.AnonymousDefinition,
+                blueprintMethod => blueprintMethod.AnonymousDefinition,
+                (targetMethod, blueprintMethod) => (targetMethod, blueprintMethod)
+            )
+            .Where(x => x.blueprintMethod.MethodName != x.targetMethod.MethodName)
+            .ToList();
     }
 }
