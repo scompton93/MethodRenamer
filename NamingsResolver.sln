@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamingsResolver", "NamingsResolver\NamingsResolver.csproj", "{8260FE30-0793-46D1-A9C0-7FAA0D3EBE85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamingsResolver", "NamingsResolver\NamingsResolver.csproj", "{8260FE30-0793-46D1-A9C0-7FAA0D3EBE85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{19B71853-F6E2-4FBF-9764-2D45A3D3AFCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8260FE30-0793-46D1-A9C0-7FAA0D3EBE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8260FE30-0793-46D1-A9C0-7FAA0D3EBE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8260FE30-0793-46D1-A9C0-7FAA0D3EBE85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19B71853-F6E2-4FBF-9764-2D45A3D3AFCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B71853-F6E2-4FBF-9764-2D45A3D3AFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B71853-F6E2-4FBF-9764-2D45A3D3AFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B71853-F6E2-4FBF-9764-2D45A3D3AFCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
