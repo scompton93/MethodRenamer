@@ -40,16 +40,12 @@ public class MethodRenamer
 
     }
 
-    private List<MethodAnonymizer> GetUniqueMethodDefinitions(string path)
+    private static IEnumerable<MethodAnonymizer> GetUniqueMethodDefinitions(string path)
     {
         var module = ModuleDefinition.ReadModule(path);
         var methods = module.Types.SelectMany(type => type.Methods);
 
-        var anonymizedMethods = new List<MethodAnonymizer>();
-        foreach (var method in methods)
-        {
-            anonymizedMethods.Add(new MethodAnonymizer(method));
-        }
+        var anonymizedMethods = methods.Select(method => new MethodAnonymizer(method)).ToList();
 
         return anonymizedMethods
             .GroupBy(o => o.AnonymousDefinition)
@@ -58,12 +54,12 @@ public class MethodRenamer
             .ToList();
     }
 
-    private List<(
+    private static List<(
         MethodAnonymizer TargetMethod,
         MethodAnonymizer BlueprintMethod
     )> GetMatchedMethods(
-        List<MethodAnonymizer> targetMethods,
-        List<MethodAnonymizer> blueprintMethods
+        IEnumerable<MethodAnonymizer> targetMethods,
+        IEnumerable<MethodAnonymizer> blueprintMethods
     )
     {
         return targetMethods
@@ -76,7 +72,7 @@ public class MethodRenamer
             .Where(x => x.blueprintMethod.MethodName != x.targetMethod.MethodName)
             .ToList();
     }
-    private int _methodsRenamed = 0;
+    private readonly int _methodsRenamed = 0;
     public int MethodsRenamed => _methodsRenamed;
 
 }

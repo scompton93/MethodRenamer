@@ -10,15 +10,15 @@ namespace Tests
         [TestMethod]
         public void TestMonoLibrary()
         {
-            List<string> expectedNames = new List<string>() { "System.Void Test1.MyClass::.ctor()", "System.Void Test1.MyClass::void_class_int_string(System.Int32,System.String)", "System.Int32 Test1.MyClass::int_class_int_string(System.Int32,System.String)", "System.Char Test1.MyClass::45645(System.Int32,System.String)", "System.Char Test1.MyClass::gdfbv34v(System.Int32,System.String)", "Test1.MyClass Test1.MyClass:: (System.Int32,System.String)" };
+            List<string> expectedNames = new List<string>() { "System.Void Test1.MyClass::.ctor()", "System.Void Test1.MyClass::void_class_int_string(System.Int32,System.String)", "System.Int32 Test1.MyClass::int_class_int_string(System.Int32,System.String)", "System.Char Test1.MyClass::45645(System.Int32,System.String)", "System.Char Test1.MyClass::gdfbv34v(System.Int32,System.String)", "Test1.MyClass Test1.MyClass::Â (System.Int32,System.String)" };
             const string targetPath = @"\TestLibraries\testTarget.dll";
             const string blueprintPath = @"\TestLibraries\testBlueprint.dll";
 
-            string tempPath =
+            var tempPath =
                 System.IO.Path.GetTempPath() + "output_" + DateTime.Now.Ticks + "_.dll";
-            string processDirectory = Path.GetDirectoryName(Environment.ProcessPath);
+            var processDirectory = Path.GetDirectoryName(Environment.ProcessPath);
 
-            var renamer = new MethodRenamer(
+            var methodRenamer = new MethodRenamer(
                 processDirectory + targetPath,
                 processDirectory + blueprintPath,
                 tempPath
