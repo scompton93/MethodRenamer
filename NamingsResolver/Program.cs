@@ -10,8 +10,8 @@ namespace NamingsResolver
     {
         static void Main(string[] args)
         {
-            const string targetPath = @"C:\Users\x\Downloads\gamepack-deob.dll";
-            const string blueprintPath = @"C:\Users\x\Downloads\gamepack-deob - Copy.dll";
+            const string targetPath = @"";
+            const string blueprintPath = @"";
 
             string outputPath = targetPath.Replace(".dll", "-renamed.dll");
 
