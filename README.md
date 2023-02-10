@@ -1,8 +1,8 @@
-# MethodRenamer
+# 🔧 MethodRenamer
 
 MethodRenamer is a .NET library for renaming methods in .NET assemblies, specifically .net assemblies that have been obfuscated.
 
-## Usage
+## 💡 Usage
 
 To use MethodRenamer, create an instance of the `MethodRenamer` class and pass in the paths to the target assembly, blueprint assembly, and the output path for the renamed assembly. The blueprint assembly provides the names for the methods in the target assembly.
 
@@ -15,7 +15,7 @@ string outputPath = targetPath.Replace(".dll", "-renamed.dll");
 var renamer = new MethodRenamer(targetPath, blueprintPath, outputPath);
 ```
 
-## How it works
+## 🤔 How it works
 
 1. The target assembly and blueprint assembly are read into memory as ModuleDefinition's.
 2. The method definitions are than uniqued for the assembly and stored in a list of MethodAnonymizer's.
